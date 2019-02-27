@@ -19,8 +19,8 @@ export default function ( delay, noTrailing, callback, debounceMode ) {
 
     /*
      * After wrapper has stopped being called, this timeout ensures that
-     * `callback` is executed at the proper times in `throttle` and `end`
-     * debounce modes.
+     * 回调函数函数会在节流之前执行
+     * 防抖模式.
      */
     var timeoutID;
     var cancelled = false;
