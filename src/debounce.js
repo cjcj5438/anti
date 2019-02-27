@@ -3,18 +3,12 @@
 import throttle from './throttle';
 
 /**
- * Debounce execution of a function. Debouncing, unlike throttling,
- * guarantees that a function is only executed a single time, either at the
- * very beginning of a series of calls, or at the very end.
+ 取消函数的执行。消除抖动,不像节流,保证一个函数只被执行一次，在开头或者是结尾
  *
- * @param  {Number}   delay         A zero-or-greater delay in milliseconds. For event callbacks, values around 100 or 250 (or even higher) are most useful.
- * @param  {Boolean}  [atBegin]     Optional, defaults to false. If atBegin is false or unspecified, callback will only be executed `delay` milliseconds
- *                                  after the last debounced-function call. If atBegin is true, callback will be executed only at the first debounced-function call.
- *                                  (After the throttled-function has not been called for `delay` milliseconds, the internal counter is reset).
- * @param  {Function} callback      A function to be executed after delay milliseconds. The `this` context and all arguments are passed through, as-is,
- *                                  to `callback` when the debounced-function is executed.
- *
- * @return {Function} A new, debounced function.
+ * @param  {Number}   delay         延迟时间
+ * @param  {Boolean}  [atBegin]     可选，默认为false。如果atBegin为false或未指定，则回调将仅在最后一次debounced-function调用之后的毫秒内执行“delay”。如果atBegin为真，回调将仅在第一次debounced-function调用时执行。(在“延迟”毫秒未调用节流函数之后，将重置内部计数器)。
+ * @param  {Function} callback      延迟毫秒后执行的函数。当执行debounced函数时，“this”上下文和所有参数按原样传递给“callback”。
+ * @return {Function}               返回 debounced function.
  */
 export default function ( delay, atBegin, callback ) {
     return callback === undefined ? throttle(delay, atBegin, false) : throttle(delay, callback, atBegin !== false);

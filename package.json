@@ -13,7 +13,7 @@
     "build": "webpack --config webpack.prod.js"
   },
   "keywords": [
-    "fugle"
+    "fugle","孚嘉"
   ],
   "author": "陈靖",
   "license": "ISC",

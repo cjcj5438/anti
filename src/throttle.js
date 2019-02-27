@@ -18,31 +18,29 @@
 export default function ( delay, noTrailing, callback, debounceMode ) {
 
     /*
-     * After wrapper has stopped being called, this timeout ensures that
-     * 回调函数函数会在节流之前执行
-     * 防抖模式.
+     * 在停止调用包装器之后，此超时将确保回调函数函数会在节流之前执行doboules模式.
      */
     var timeoutID;
     var cancelled = false;
 
-    // Keep track of the last time `callback` was executed.
+    // 跟踪上一次执行“回调”的时间。
     var lastExec = 0;
 
-    // Function to clear existing timeout
+    // 函数清除现有超时
     function clearExistingTimeout () {
         if ( timeoutID ) {
             clearTimeout(timeoutID);
         }
     }
 
-    // Function to cancel next exec
+    // 函数取消下一个执行
     function cancel () {
         clearExistingTimeout();
         cancelled = true;
     }
 
 
-    // `noTrailing` defaults to falsy.
+    // noTrailing默认false.
     if ( typeof noTrailing !== 'boolean' ) {
         debounceMode = callback;
         callback = noTrailing;
@@ -50,9 +48,7 @@ export default function ( delay, noTrailing, callback, debounceMode ) {
     }
 
     /*
-     * The `wrapper` function encapsulates all of the throttling / debouncing
-     * functionality and when executed will limit the rate at which `callback`
-     * is executed.
+     * 功能和执行时间将限制“回调”的执行速度。
      */
     function wrapper () {
 
@@ -64,25 +60,20 @@ export default function ( delay, noTrailing, callback, debounceMode ) {
             return;
         }
 
-        // Execute `callback` and update the `lastExec` timestamp.
+        // 执行“回调”并更新“lastExec”时间戳。
         function exec () {
             lastExec = Date.now();
             callback.apply(self, args);
         }
 
         /*
-         * If `debounceMode` is true (at begin) this is used to clear the flag
-         * to allow future `callback` executions.
-         */
+         * 如果“debounceMode”为真(在开始时)，则用于清除标志，以允许将来执行“回调”。 */
         function clear () {
             timeoutID = undefined;
         }
 
         if ( debounceMode && !timeoutID ) {
-            /*
-             * Since `wrapper` is being called for the first time and
-             * `debounceMode` is true (at begin), execute `callback`.
-             */
+            // 因为' wrapper '是第一次被调用，' debounceMode '是true(在begin)，所以执行' callback '。
             exec();
         }
 
@@ -90,22 +81,17 @@ export default function ( delay, noTrailing, callback, debounceMode ) {
 
         if ( debounceMode === undefined && elapsed > delay ) {
             /*
-             * In throttle mode, if `delay` time has been exceeded, execute
-             * `callback`.
+             * 在节流模式下，如果超过“延迟”时间，则执行“回调”。
              */
             exec();
 
         } else if ( noTrailing !== true ) {
             /*
-             * In trailing throttle mode, since `delay` time has not been
-             * exceeded, schedule `callback` to execute `delay` ms after most
-             * recent execution.
+             * 在throttle模式下，由于没有超过“延迟”时间，在最近一次执行后，安排“回调”来执行“延迟”ms。
              *
-             * If `debounceMode` is true (at begin), schedule `clear` to execute
-             * after `delay` ms.
+             * 如果“debounceMode”是正确的(在开始时)，那么在“delay”ms.之后安排“clear”执行。
              *
-             * If `debounceMode` is false (at end), schedule `callback` to
-             * execute after `delay` ms.
+             * 如果“debounceMode”是假的(在末尾)，计划“callback”在“delay”ms之后执行。
              */
             timeoutID = setTimeout(debounceMode ? clear : exec, debounceMode === undefined ? delay - elapsed : delay);
         }
